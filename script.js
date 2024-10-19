@@ -18,7 +18,7 @@ const path = d3.geoPath().projection(projection);
 
 // Cargar el archivo GeoJSON y los datos
 Promise.all([
-    d3.json("spain-provinces.geojson"),
+    d3.json("spain-provinces-edited.geojson"),
     d3.json("output_nationality.json")
 ]).then(function([geojson, data]) {
     // Dibujar las provincias
