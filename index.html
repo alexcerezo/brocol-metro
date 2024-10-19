@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Condenados</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <div>
+        <h2>Años</h2>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2022" checked>2022</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2021" checked>2021</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2020" checked>2020</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2019" checked>2019</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2018" checked>2018</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2017" checked>2017</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2016" checked>2016</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2015" checked>2015</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2014" checked>2014</label>
+        <label><input type="checkbox" class="year-checkbox" name="year" value="2013" checked>2013</label>
+    </div>
+    <div>
+        <h2>Sexo</h2>
+        <label><input type="checkbox" class="sex-checkbox" value="Hombres" checked>Hombres</label>
+        <label><input type="checkbox" class="sex-checkbox" value="Mujeres" checked>Mujeres</label>
+    </div>
+    <div>
+        <h2>Nacionalidad</h2>
+        <label><input type="checkbox" class="nationality-checkbox" value="Española" checked>Española</label>
+        <label><input type="checkbox" class="nationality-checkbox" value="Extranjera" checked>Extranjera</label>
+    </div>
+    <button id="download-btn">Descargar SVG</button>
+    <div class="map-container">
+        <div class="map-3d" id="map"></div>
+    </div>
+    <div class="map-container">
+        <div class="map-3d" id="map"></div>
+    </div>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const svg = document.querySelector('svg');
+            const serializer = new XMLSerializer();
+            const source = serializer.serializeToString(svg);
+
+            const svgBlob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = 'mapa.svg';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
