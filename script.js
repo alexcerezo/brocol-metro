@@ -142,10 +142,11 @@ function animetedCircles() {
                 d3.select(this)
                     .attr("animating", "true") // Marcar como animados
                     .transition()
-                    .delay(() => Math.random() * 500)
+                    .delay(() => Math.random() * 1000)
                     .duration(() => Math.random() * 500 + 500) // Duración aleatoria entre 500 y 2500 ms
                     .attr("opacity", 0.5)
                     .transition()
+                    .delay(() => Math.random() * 500)
                     .duration(() => Math.random() * 500 + 500) // Duración aleatoria entre 500 y 2500 ms
                     .attr("opacity", 1)
                     .on("end", function() {
