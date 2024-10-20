@@ -132,22 +132,31 @@ function animetedCircles() {
     // Si hay menos de NUM_ANIMATED_POINTS animados, seleccionar más
     if (animatedCircles.size() < NUM_ANIMATED_POINTS) {
         const numToAnimate = NUM_ANIMATED_POINTS - animatedCircles.size();
-        circles.filter(function() {
+        const unanimatedCircles = circles.filter(function() {
             return d3.select(this).attr("animating") !== "true";
-        })
-        .filter((d, i) => i < numToAnimate) // Seleccionar los primeros numToAnimate círculos no animados
-        .attr("animating", "true") // Marcar como animados
-        .transition()
-        .delay(() => Math.random() * 500)
-        .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
-        .attr("opacity", 0.75)
-        .transition()
-        .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
-        .attr("opacity", 1)
-        .on("end", function() {
-            d3.select(this).attr("animating", null); // Desmarcar como animados
-            animetedCircles(); // Llamar a la función de nuevo al final de la transición
         });
+
+        // Seleccionar aleatoriamente numToAnimate círculos no animados
+        unanimatedCircles.each(function(d, i, nodes) {
+            if (Math.random() < numToAnimate / unanimatedCircles.size()) {
+                d3.select(this)
+                    .attr("animating", "true") // Marcar como animados
+                    .transition()
+                    .delay(() => Math.random() * 500)
+                    .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
+                    .attr("opacity", 0.75)
+                    .transition()
+                    .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
+                    .attr("opacity", 1)
+                    .on("end", function() {
+                        d3.select(this).attr("animating", null); // Desmarcar como animados
+                        animetedCircles(); // Llamar a la función de nuevo al final de la transición
+                    });
+            }
+        });
+    } else {
+        // Llamar a la función de nuevo para seguir verificando
+        setTimeout(animetedCircles, 1000);
     }
 }
 
