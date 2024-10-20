@@ -120,7 +120,7 @@ svg.selectAll("path").each(function(d) {
 // Función para animar los puntos
 function animetedCircles() {
     svg.selectAll("circle")
-        .filter((d, i) => i % 5 === 0) // Seleccionar solo 1 de cada 5 círculos
+        .filter((d, i) => (i + Math.random(1,5)) % 5 === 0) // Seleccionar solo 1 de cada 5 círculos
         .transition()
         .delay(() => Math.random() * 500)
         .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
