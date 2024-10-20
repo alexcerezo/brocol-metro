@@ -96,7 +96,7 @@ svg.selectAll("path").each(function(d) {
 
     // Escala de color para los puntos
     const colorScale = d3.scaleLinear()
-        .domain([min, max])
+        .domain([0, max])
         .range(["rgba(255, 200, 200, 1)", "rgba(140, 0, 0, 1)"])
         .clamp(true);
 
@@ -124,10 +124,11 @@ function animetedCircles() {
         .transition()
         .delay(() => Math.random() * 500)
         .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
-        .attr("opacity", 0.5)
+        .attr("opacity", 0.75)
         .transition()
         .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
         .attr("opacity", 1)
+        .delay(() => Math.random() * 5000)
         .on("end", animetedCircles); // Llamar a la función de nuevo al final de la transición
 }
 
