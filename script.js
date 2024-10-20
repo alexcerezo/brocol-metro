@@ -120,15 +120,15 @@ svg.selectAll("path").each(function(d) {
 // Función para animar los puntos
 function animetedCircles() {
     svg.selectAll("circle")
-    // Bajar la opacidad con un delay aleatorio para cada circulo
+        // Bajar la opacidad con un delay aleatorio para cada círculo
         .transition()
-        .delay(d => Math.random() * 500)
-        .duration(500)
-        .attr("r", 5)
+        .delay(() => Math.random() * 500)
+        .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
+        .attr("opacity", 0.5)
         .transition()
-        .duration(500)
-        .attr("r", 2)
-        .on("end", animetedCircles);
+        .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
+        .attr("opacity", 1)
+        .on("end", animetedCircles); // Llamar a la función de nuevo al final de la transición
 }
 
 // Función para obtener los valores seleccionados de los checkboxes
