@@ -150,15 +150,14 @@ function animetedCircles() {
                     .attr("opacity", 1)
                     .on("end", function() {
                         d3.select(this).attr("animating", null); // Desmarcar como animados
-                        animetedCircles(); // Llamar a la función de nuevo al final de la transición
                     });
             }
         });
-    } else {
-        // Llamar a la función de nuevo para seguir verificando
-        setTimeout(animetedCircles, 1000);
     }
 }
+
+// Usar d3.interval para ejecutar la función de animación continuamente
+d3.interval(animetedCircles, 1000);
 
 // Función para obtener los valores seleccionados de los checkboxes
 function getSelectedValues() {
