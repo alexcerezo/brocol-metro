@@ -1,0 +1,177 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+body {
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --gradient-start: rgba(2,0,36,1);
+    --gradient-end: rgb(28, 78, 148);
+    background: linear-gradient(
+      135deg,
+      var(--gradient-start),
+      var(--gradient-end)
+    );
+    animation-duration: 10s;
+    animation-name: fondo;
+    animation-iteration-count: infinite;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 2vh;
+    grid-row-gap: 2vh;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 2vh;
+}
+
+.div1 { grid-area: 1 / 1 / 2 / 4;
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2vh;
+}
+.div2 { grid-area: 1 / 4 / 4 / 6;
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.sex-nationality {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        gap: 2vh;
+}
+
+.map-3d {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+}
+
+.map-3d svg {
+        width: 100%;
+        height: 100%;
+}
+
+.div3 { grid-area: 2 / 1 / 4 / 4;
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2vh;
+}
+.div4 { grid-area: 4 / 1 / 6 / 6;
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2vh;
+}
+
+.selectors-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.selector-box {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 1vh;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    border: 2px solid rgba(255, 255, 255, 1);
+    /* Eliminar borde derecho*/
+    border-right: none;
+}
+
+.first {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.last {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-right: 2px solid rgba(255, 255, 255, 1);
+}
+
+.selector-box input[type="checkbox"] {
+    display: none;
+}
+
+.selector-box input[type="checkbox"]:checked + label {
+    background-color: rgba(93, 255, 106, 0.5);
+}
+
+.selector-box input[type="checkbox"]:checked {
+    background-color: rgba(93, 255, 106, 0.5);
+}
+
+.selector-box input[type="checkbox"]:checked + .year-box {
+    background-color: rgba(93, 255, 106, 0.5);
+}
+
+@property --gradient-start {
+    syntax: "<color>";
+    initial-value: transparent;
+    inherits: false;
+}
+
+@property --gradient-end {
+    syntax: "<color>";
+    initial-value: transparent;
+    inherits: false;
+}
+
+@keyframes fondo {
+    from {
+        --gradient-start: rgba(2,0,36,1);
+        --gradient-end: rgb(14, 79, 97);
+    }
+
+    50% {
+        --gradient-start: rgb(14, 79, 97);
+        --gradient-end: rgba(2,0,36,1);
+        
+    }
+
+    to {
+        --gradient-start: rgba(2,0,36,1);
+        --gradient-end: rgb(14, 79, 97);
+    }
+}
+
+@media (max-width: 1425px) {
+    html, body {
+        height: auto;
+        overflow-y: auto;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        padding: 2vh;
+    }
+}

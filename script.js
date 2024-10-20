@@ -6,7 +6,7 @@ const height = 600;
 const svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("viewBox", `0 ${height * 0} ${width} ${height * 1}`);
+    .attr("viewBox", `0 ${height * 0} ${625} ${height}`);
 
 // Proyección y path
 const projection = d3.geoMercator()
@@ -32,7 +32,15 @@ Promise.all([
 
 
 function getProvinceData(data, provinceName, year, sex, nationality) {
-    const yearData = year.toString().split(";");
+    let yearData = year.toString().split(";");
+    
+    if (year.length === 0) {
+        // Si no se selecciona ningún año, usar todos los años disponibles en los datos
+        yearData = Object.keys(data);
+    } else {
+        yearData = year.toString().split(";");
+    }
+
     let total = 0;
 
     for (let i = 0; i < yearData.length; i++) {

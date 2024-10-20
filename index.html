@@ -7,56 +7,102 @@
     <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-    <div>
-        <h2>Años</h2>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2022" checked>2022</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2021" checked>2021</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2020" checked>2020</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2019" checked>2019</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2018" checked>2018</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2017" checked>2017</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2016" checked>2016</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2015" checked>2015</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2014" checked>2014</label>
-        <label><input type="checkbox" class="year-checkbox" name="year" value="2013" checked>2013</label>
+    <div class="div1">
+        <div>
+            <h2>Años</h2>
+                <div class="selectors-container">
+                    <label class="selector-box first"><input type="checkbox" class="year-checkbox" name="year" value="2022" checked>2022</label>
+                    <label class="selector-box"><input type="checkbox" class="year-checkbox" name="year" value="2021" checked>2021</label>
+                    <label class="selector-box"><input type="checkbox" class="year-checkbox" name="year" value="2020" checked>2020</label>
+                    <label class="selector-box"><input type="checkbox" class="year-checkbox" name="year" value="2019" checked>2019</label>
+                    <label class="selector-box"><input type="checkbox" class="year-checkbox" name="year" value="2018" checked>2018</label>
+                    <label class="selector-box"><input type="checkbox" class="year-checkbox" name="year" value="2017" checked>2017</label>
+                    <label class="selector-box"><input type="checkbox" class="year-checkbox" name="year" value="2016" checked>2016</label>
+                    <label class="selector-box"><input type="checkbox" class="year-checkbox" name="year" value="2015" checked>2015</label>
+                    <label class="selector-box"><input type="checkbox" class="year-checkbox" name="year" value="2014" checked>2014</label>
+                    <label class="selector-box last"><input type="checkbox" class="year-checkbox" name="year" value="2013" checked>2013</label>
+                </div>
+        </div>
+        <div class="sex-nationality">
+            <div>
+                <h2>Sexo</h2>
+                <div class="selectors-container">
+                    <label class="selector-box first"><input type="checkbox" class="sex-checkbox" value="Hombres" checked>Hombres</label>
+                    <label class="selector-box last"><input type="checkbox" class="sex-checkbox" value="Mujeres" checked>Mujeres</label>
+                </div>
+            </div>
+            <div>
+                <h2>Nacionalidad</h2>
+                <div class="selectors-container">
+                    <label class="selector-box first"><input type="checkbox" class="nationality-checkbox" value="Española" checked>Española</label>
+                    <label class="selector-box last"><input type="checkbox" class="nationality-checkbox" value="Extranjera" checked>Extranjera</label>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <h2>Sexo</h2>
-        <label><input type="checkbox" class="sex-checkbox" value="Hombres" checked>Hombres</label>
-        <label><input type="checkbox" class="sex-checkbox" value="Mujeres" checked>Mujeres</label>
-    </div>
-    <div>
-        <h2>Nacionalidad</h2>
-        <label><input type="checkbox" class="nationality-checkbox" value="Española" checked>Española</label>
-        <label><input type="checkbox" class="nationality-checkbox" value="Extranjera" checked>Extranjera</label>
-    </div>
-    <button id="download-btn">Descargar SVG</button>
-    <div class="map-container">
+    <div class="div2">
         <div class="map-3d" id="map"></div>
     </div>
-    <div class="map-container">
-        <div class="map-3d" id="map"></div>
+    <div class="div3"> 
+        <h2>Condenados</h2>
     </div>
+    <div class="div4"> 
+        <h2>Condenados</h2>
+    </div>
+
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="script.js"></script>
     <script>
-        document.getElementById('download-btn').addEventListener('click', function() {
-            const svg = document.querySelector('svg');
-            const serializer = new XMLSerializer();
-            const source = serializer.serializeToString(svg);
+        document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar el estado de las cajas de años
+    const yearCheckboxes = document.querySelectorAll('.year-checkbox');
+    yearCheckboxes.forEach(checkbox => {
+        checkbox.parentElement.style.backgroundColor = checkbox.checked ? 'rgba(93, 255, 106, 0.5)' : 'rgba(255, 255, 255, 0.2)';
+    });
 
-            const svgBlob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
-            const url = URL.createObjectURL(svgBlob);
-
-            const downloadLink = document.createElement('a');
-            downloadLink.href = url;
-            downloadLink.download = 'mapa.svg';
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-            URL.revokeObjectURL(url);
+    // Manejar la selección individual de años
+    yearCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (!this.checked && Array.from(yearCheckboxes).filter(cb => cb.checked).length === 0) {
+                this.checked = true; // No permitir deseleccionar la última casilla activa
+            }
+            this.parentElement.style.backgroundColor = this.checked ? 'rgba(93, 255, 106, 0.5)' : 'rgba(255, 255, 255, 0.2)';
         });
+    });
+
+    // Inicializar el estado de las cajas de sexo
+    const sexCheckboxes = document.querySelectorAll('.sex-checkbox');
+    sexCheckboxes.forEach(checkbox => {
+        checkbox.parentElement.style.backgroundColor = checkbox.checked ? 'rgba(93, 255, 106, 0.5)' : 'rgba(255, 255, 255, 0.2)';
+    });
+
+    // Manejar la selección individual de sexo
+    sexCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (!this.checked && Array.from(sexCheckboxes).filter(cb => cb.checked).length === 0) {
+                this.checked = true; // No permitir deseleccionar la última casilla activa
+            }
+            this.parentElement.style.backgroundColor = this.checked ? 'rgba(93, 255, 106, 0.5)' : 'rgba(255, 255, 255, 0.2)';
+        });
+    });
+
+    // Inicializar el estado de las cajas de nacionalidad
+    const nationalityCheckboxes = document.querySelectorAll('.nationality-checkbox');
+    nationalityCheckboxes.forEach(checkbox => {
+        checkbox.parentElement.style.backgroundColor = checkbox.checked ? 'rgba(93, 255, 106, 0.5)' : 'rgba(255, 255, 255, 0.2)';
+    });
+
+    // Manejar la selección individual de nacionalidad
+    nationalityCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (!this.checked && Array.from(nationalityCheckboxes).filter(cb => cb.checked).length === 0) {
+                this.checked = true; // No permitir deseleccionar la última casilla activa
+            }
+            this.parentElement.style.backgroundColor = this.checked ? 'rgba(93, 255, 106, 0.5)' : 'rgba(255, 255, 255, 0.2)';
+        });
+    });
+});
     </script>
 </body>
 </html>
