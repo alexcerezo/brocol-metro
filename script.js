@@ -119,8 +119,11 @@ svg.selectAll("path").each(function(d) {
 
 // Función para animar los puntos
 function animetedCircles() {
-    svg.selectAll("circle")
-        .filter((d, i) => (i + Math.random(1,5)) % 5 === 0) // Seleccionar solo 1 de cada 5 círculos
+    // Seleccionar todos los círculos
+    const circles = svg.selectAll("circle");
+
+    // Filtrar aleatoriamente 1 de cada 5 círculos
+    circles.filter(() => Math.random() < 0.2) // Aproximadamente 1 de cada 5
         .transition()
         .delay(() => Math.random() * 500)
         .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
@@ -128,8 +131,9 @@ function animetedCircles() {
         .transition()
         .duration(() => Math.random() * 2000 + 500) // Duración aleatoria entre 500 y 2500 ms
         .attr("opacity", 1)
-        .delay(5000)
-        .on("end", animetedCircles); // Llamar a la función de nuevo al final de la transición
+        .on("end", function() {
+            d3.select(this).call(animetedCircles); // Llamar a la función de nuevo al final de la transición
+        });
 }
 
 // Función para obtener los valores seleccionados de los checkboxes
