@@ -45,80 +45,91 @@ function getProvinceData(data, provinceName, year, sex, nationality) {
     return total;
 }
 
-    function generatePoints(province, numPoints, max) {
-        const bounds = path.bounds(province);
-        const points = [];
-        const gridSpacing = 6;
-
-        let probabilityOfPoint = 1 - numPoints / max; // Ajusta el 0.9 según tus datos
-
-        bounds[0][0] -= bounds[0][0] % gridSpacing;
-        bounds[0][1] -= bounds[0][1] % gridSpacing;
-        bounds[1][0] += bounds[1][0] % gridSpacing;
-        bounds[1][1] += bounds[1][1] % gridSpacing;
-
-        for (let x = bounds[0][0]; x < bounds[1][0]; x += gridSpacing) {
-            for (let y = bounds[0][1]; y < bounds[1][1]; y += gridSpacing) {
-                if (Math.random() + 0.7 > probabilityOfPoint) {
-                    const point = [x, y];
-                    if (d3.geoContains(province, projection.invert(point))) {
-                        points.push(point);
-                    }
-                    random = Math.random();
+function generatePoints(province, numPoints, max) {
+    const bounds = path.bounds(province);
+    const points = [];
+    const gridSpacing = 6;
+    let probabilityOfPoint = 1 - numPoints / max; // Ajusta el 0.9 según tus datos
+    bounds[0][0] -= bounds[0][0] % gridSpacing;
+    bounds[0][1] -= bounds[0][1] % gridSpacing;
+    bounds[1][0] += bounds[1][0] % gridSpacing;
+    bounds[1][1] += bounds[1][1] % gridSpacing;
+    for (let x = bounds[0][0]; x < bounds[1][0]; x += gridSpacing) {
+        for (let y = bounds[0][1]; y < bounds[1][1]; y += gridSpacing) {
+            if (Math.random() + 0.7 > probabilityOfPoint) {
+                const point = [x, y];
+                if (d3.geoContains(province, projection.invert(point))) {
+                    points.push(point);
                 }
+                random = Math.random();
             }
         }
-        return points;
     }
+    return points;
+}
 
     
 // Función para actualizar el mapa con puntos
-    function updateMap(data, years, sex, nationality) {
-    svg.selectAll("circle").remove();
-    // Calcular el maximo
-    let max = 0;
-    let min = 0;
-    svg.selectAll("path").each(function(d) {
-        const provinceName = d.properties.name;
-        const provinceData = getProvinceData(data, provinceName, years, sex, nationality);
-        if (provinceData > max) {
-            max = provinceData;
-        }
-        if (provinceData < min) {
-            min = provinceData;
-        }
-    });
-
-    console.log(`Max: ${max}`); // Depuración
-    console.log(`Min: ${min}`); // Depuración
-    svg.selectAll("path").each(function(d) {
-        const provinceName = d.properties.name;
-        const provinceData = getProvinceData(data, provinceName, years, sex, nationality);
-        const numPoints = provinceData; // Ajusta el número de puntos según tus datos
-        console.log(`Province: ${provinceName}, Points: ${numPoints}`); // Depuración
-    
-        // Escala de color para los puntos
-        const colorScale = d3.scaleLinear()
-            .domain([min, max])
-            .range(["rgba(255, 200, 200, 1)", "rgba(140, 0, 0, 1)"])
-            .clamp(true);
-    
-        const points = generatePoints(d, numPoints, max);
-        svg.selectAll(`.point-${provinceName}`).remove(); // Eliminar puntos anteriores
-        svg.selectAll(`.point-${provinceName}`)
-            .data(points)
-            .enter().append("circle")
-            .attr("class", `point-${provinceName}`)
-            .attr("cx", d => d[0])
-            .attr("cy", d => d[1])
-            .attr("r", 2)
-            .attr("fill", d => {
-                // Asegurarse de que numPoints esté dentro del rango
-                const color = colorScale(numPoints);
-                return color ? color : "rgba(0, 150, 0, 1)"; // Color por defecto si está fuera del rango
-            });        
-    });
+function updateMap(data, years, sex, nationality) {
+svg.selectAll("circle").remove();
+// Calcular el maximo
+let max = 0;
+let min = 0;
+svg.selectAll("path").each(function(d) {
+    const provinceName = d.properties.name;
+    const provinceData = getProvinceData(data, provinceName, years, sex, nationality);
+    if (provinceData > max) {
+        max = provinceData;
     }
+    if (provinceData < min) {
+        min = provinceData;
+    }
+});
+
+console.log(`Max: ${max}`); // Depuración
+console.log(`Min: ${min}`); // Depuración
+svg.selectAll("path").each(function(d) {
+    const provinceName = d.properties.name;
+    const provinceData = getProvinceData(data, provinceName, years, sex, nationality);
+    const numPoints = provinceData; // Ajusta el número de puntos según tus datos
+    console.log(`Province: ${provinceName}, Points: ${numPoints}`); // Depuración
+
+    // Escala de color para los puntos
+    const colorScale = d3.scaleLinear()
+        .domain([min, max])
+        .range(["rgba(255, 200, 200, 1)", "rgba(140, 0, 0, 1)"])
+        .clamp(true);
+
+    const points = generatePoints(d, numPoints, max);
+    svg.selectAll(`.point-${provinceName}`).remove(); // Eliminar puntos anteriores
+    svg.selectAll(`.point-${provinceName}`)
+        .data(points)
+        .enter().append("circle")
+        .attr("class", `point-${provinceName}`)
+        .attr("cx", d => d[0])
+        .attr("cy", d => d[1])
+        .attr("r", 2)
+        .attr("fill", d => {
+            // Asegurarse de que numPoints esté dentro del rango
+            const color = colorScale(numPoints);
+            return color ? color : "rgba(0, 150, 0, 1)"; // Color por defecto si está fuera del rango
+        });        
+});
+}
+
+// Función para animar los puntos
+function animetedCircles() {
+    svg.selectAll("circle")
+    // Bajar la opacidad con un delay aleatorio para cada circulo
+        .transition()
+        .delay(d => Math.random() * 500)
+        .duration(500)
+        .attr("r", 5)
+        .transition()
+        .duration(500)
+        .attr("r", 2)
+        .on("end", animetedCircles);
+}
 
 // Función para obtener los valores seleccionados de los checkboxes
 function getSelectedValues() {
@@ -153,8 +164,8 @@ function getSelectedValues() {
 // Inicializar el mapa con todos los valores seleccionados
 const initialValues = getSelectedValues();
 
-updateMap(data, initialValues.years, initialValues.sex, initialValues.nationality);
-
+    updateMap(data, initialValues.years, initialValues.sex, initialValues.nationality);
+    animetedCircles();
 
 // Escuchar cambios en los checkboxes
 d3.selectAll(".year-checkbox, .sex-checkbox, .nationality-checkbox").on("change", function() {
