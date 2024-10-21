@@ -54,3 +54,7 @@ Si tienes alguna pregunta o sugerencia, puedes contactarme en [info@alexcerezo.e
 ---
 
 ¡Gracias por usar el Brocolímetro! 🥦📊
+
+---
+
+**AVISO⚠️: NO SOY RACISTA**
