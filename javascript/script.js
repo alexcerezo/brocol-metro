@@ -188,7 +188,7 @@ function createBarChart(data) {
     });
 
     const chartWidth = window.innerWidth * 0.85; // Ajustar la anchura en función de la pantalla
-    const chartHeight = window.innerHeight * 0.4; // Ajustar la altura en función de la pantalla
+    const chartHeight = window.innerHeight * 0.35; // Ajustar la altura en función de la pantalla
     const margin = { top: 20, right: 30, bottom: 40, left: 70 };
 
     const x = d3.scaleBand()
@@ -232,7 +232,7 @@ function createBarChart(data) {
             return d;
         }))
         .selectAll("text")
-        .style("font-size", `${fontSize * 0.1}px`); // Ajustar tamaño de fuente
+        .style("font-size", `${fontSize * 0.07}px`); // Ajustar tamaño de fuente
 
     svg.append("g")
     .attr("transform", `translate(${margin.left},0)`)
