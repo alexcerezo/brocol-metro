@@ -5,6 +5,10 @@ html, body {
     height: 100%;
     overflow: hidden;
     box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+
 }
 
 body {
@@ -34,46 +38,27 @@ body {
 .div1 { grid-area: 1 / 1 / 2 / 4;
         background-color: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
-        border-radius: 50px;
+        border-radius: 10px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
+        justify-content: space-around;
         align-items: center;
         padding: 2vh;
+        gap: 2vh;
 }
 .div2 { grid-area: 1 / 4 / 4 / 6;
         background-color: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
-        border-radius: 50px;
+        border-radius: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
-}
-
-.sex-nationality {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: row;
-        gap: 2vh;
-}
-
-.map-3d {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-}
-
-.map-3d svg {
-        width: 100%;
-        height: 100%;
 }
 
 .div3 { grid-area: 2 / 1 / 4 / 4;
         background-color: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
-        border-radius: 50px;
+        border-radius: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -82,11 +67,35 @@ body {
 .div4 { grid-area: 4 / 1 / 6 / 6;
         background-color: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
-        border-radius: 50px;
+        border-radius: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 2vh;
+}
+
+.sex-nationality {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        gap: 2vh;
+}
+
+.map-3d svg {    
+        width: 100%;
+        height: 100%;
+}
+
+#percentage-container p {
+    font-size: 5vh;
+    font-weight: 900;
+    color: rgb(255, 67, 67);
+}
+
+.selectors {
+    display: flex;
+    flex-direction: column;
 }
 
 .selectors-container {
@@ -94,15 +103,27 @@ body {
     flex-wrap: wrap;
 }
 
+.years-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+}
+
+.years-container div {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
 .selector-box {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 1vh;
     display: flex;
     align-items: center;
     cursor: pointer;
     user-select: none;
-    border: 2px solid rgba(255, 255, 255, 1);
-    /* Eliminar borde derecho*/
+    padding: 1vh;
+    border: 2px solid white;
     border-right: none;
 }
 
@@ -114,7 +135,7 @@ body {
 .last {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    border-right: 2px solid rgba(255, 255, 255, 1);
+    border-right: 2px solid white;
 }
 
 .selector-box input[type="checkbox"] {
@@ -122,15 +143,15 @@ body {
 }
 
 .selector-box input[type="checkbox"]:checked + label {
-    background-color: rgba(93, 255, 106, 0.5);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .selector-box input[type="checkbox"]:checked {
-    background-color: rgba(93, 255, 106, 0.5);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .selector-box input[type="checkbox"]:checked + .year-box {
-    background-color: rgba(93, 255, 106, 0.5);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 @property --gradient-start {
@@ -173,5 +194,17 @@ body {
         display: flex;
         flex-direction: column;
         padding: 2vh;
+    }
+}
+
+@media (max-width: 1425px) {
+    .div1 {
+        flex-direction: column;
+}
+}
+
+@media (max-width: 750px) {
+    .years-container {
+        flex-direction: column;
     }
 }
